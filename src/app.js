@@ -16,7 +16,7 @@ app.use(express.json()); // <-- This is required!
 app.use(cookieParser());
 app.use(cors({
   origin: allowedOrigins,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST','PATCH', 'PUT', 'DELETE'],
   credentials: true
 }));
 
