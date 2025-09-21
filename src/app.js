@@ -9,11 +9,13 @@ import { notFound, errorHandler } from "./middleware/error.js";
 
 const app = express();
 
+const allowedOrigins = [process.env.CLIENT_ORIGIN, 'http://localhost:5173'];
+
 app.use(morgan("dev"));
 app.use(express.json()); // <-- This is required!
 app.use(cookieParser());
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN,
+  origin: allowedOrigins,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
