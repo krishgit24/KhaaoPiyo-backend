@@ -3,10 +3,10 @@ export const notFound = (req, res, next) => {
 };
 
 export const errorHandler = (err, req, res, next) => {
-  console.error(err);
-  const status = err.statusCode || 500;
-  res.status(status).json({
-    message: err.message || "Server error",
-    stack: process.env.NODE_ENV === "production" ? undefined : err.stack
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).json({
+    message: err.message || "Internal Server Error",
+    stack: process.env.NODE_ENV === "production" ? undefined : err.stack,
+    errors: err.errors || undefined
   });
 };
