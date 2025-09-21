@@ -2,7 +2,7 @@ import { Router } from "express";
 import { signup, login, logout, me } from "../controllers/auth.controller.js";
 import { requireAuth } from "../middleware/auth.js";
 import jwt from "jsonwebtoken";
-import User from "../models/user.model.js";
+import User from "../models/User.js";
 
 const router = Router();
 
