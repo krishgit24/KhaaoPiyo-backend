@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import { notFound, errorHandler } from "./middleware/error.js";
 import { Server } from "socket.io";
+import http from 'http';
 
 const app = express();
 
