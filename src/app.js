@@ -6,8 +6,20 @@ import foodRoutes from "./routes/food.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import { notFound, errorHandler } from "./middleware/error.js";
+import { Server } from "socket.io";
 
 const app = express();
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*", // or your frontend URL
+    methods: ["GET", "POST"]
+  }
+});
+
+// Attach io to app for use in routes
+app.set("io", io);
 
 const allowedOrigins = [process.env.CLIENT_ORIGIN, 'http://localhost:5173'];
 

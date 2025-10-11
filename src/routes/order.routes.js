@@ -21,17 +21,6 @@ router.post("/", requireAuth, async (req, res) => {
   });
   await User.findByIdAndUpdate(req.user.id, { $inc: { points: 10 } });
   res.status(201).json(order);
-
-   // ---- AUTOMATIC STATUS UPDATES ----
-  // After 10s → "Out for delivery"
-  setTimeout(async () => {
-    await Order.findByIdAndUpdate(order._id, { status: "Out for delivery" });
-  }, 10000);
-
-  // After 20s → "Delivered"
-  setTimeout(async () => {
-    await Order.findByIdAndUpdate(order._id, { status: "Delivered" });
-  }, 20000);
 });
 
 // Get user's orders
@@ -58,6 +47,11 @@ router.patch("/:id/status", requireAuth, async (req, res) => {
   }
   order.status = status;
   await order.save();
+
+  // Emit status update via Socket.IO
+  const io = req.app.get("io");
+  io.emit(`order_${order._id}`, { status }); // event name = order_<orderId>
+
   res.json(order);
 });
 
